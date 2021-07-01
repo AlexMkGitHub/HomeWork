@@ -1,7 +1,5 @@
 package hw5;
 
-import java.util.Arrays;
-
 public class Main_hw5 {
 
     public static void main(String[] args) {
