@@ -4,6 +4,7 @@ public class Animal {
     String name;
     String color;
     int age;
+    public static int animalNumber = 0;
 
     public Animal() {
 
@@ -15,6 +16,10 @@ public class Animal {
         this.age = age;
     }
 
+    {
+        animalNumber += 1;
+    }
+
     public void runAnimal(int distanceLength) {
         System.out.println(name + " пробежал " + distanceLength + "м");
     }
@@ -23,4 +28,7 @@ public class Animal {
         System.out.println(name + " проплыл " + distanceSwim + "м");
     }
 
+    public static int getAnimalNumber() {
+        return animalNumber;
+    }
 }

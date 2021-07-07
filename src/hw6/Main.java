@@ -19,7 +19,9 @@ public class Main {
         dog2.runAnimal(501);
         cat1.swimAnimal(20);
         dog2.swimAnimal(5);
-        System.out.println("Всего создано котов " + Cat.catNumbers + ".");
-        System.out.println("Всего создано собак " + Dog.dogNumbers + ".");
+        System.out.println();
+        System.out.println("Всего создано животных " + Animal.getAnimalNumber() + ".");
+        System.out.println("Всего создано котов " + Cat.getCatNumbers() + ".");
+        System.out.println("Всего создано собак " + Dog.getDogNumbers() + ".");
     }
 }

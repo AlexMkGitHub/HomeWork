@@ -1,7 +1,7 @@
 package hw6;
 
 public class Dog extends Animal {
-    static int dogNumbers = 0;
+   private static int dogNumbers = 0;
 
     {
         dogNumbers += 1;
@@ -29,4 +29,7 @@ public class Dog extends Animal {
         }
     }
 
+    public static int getDogNumbers() {
+        return dogNumbers;
+    }
 }
