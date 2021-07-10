@@ -31,7 +31,8 @@ public class Cat {
             System.out.println();
             return true;
         } else {
-            System.out.println("Коту " + getName() + " не хватает еды! Ему надо " + getNeedFood() + " еды!");
+            System.out.println("Коту " + getName() + " не хватает еды! Ему надо " + getNeedFood() +
+                    " еды! В сейчас в миске " + plate.getPlateSize() + " еды!");
             System.out.println();
             return catEat = false;
 
