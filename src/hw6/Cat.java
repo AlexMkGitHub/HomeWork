@@ -1,7 +1,7 @@
 package hw6;
 
 public class Cat extends Animal {
-    private static int catNumbers = 0;
+    static int catNumbers = 0;
 
     {
         catNumbers += 1;
@@ -25,9 +25,5 @@ public class Cat extends Animal {
     @Override
     public void swimAnimal(int distanceSwim) {
         System.out.println("Извините, но коты не умеют плавать!");
-    }
-
-    public static int getCatNumbers() {
-        return catNumbers;
     }
 }
