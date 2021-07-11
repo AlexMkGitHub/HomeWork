@@ -2,7 +2,7 @@ package hw7;
 
 public class Cat {
     public String name;
-    private int needFood;
+    private int needFood = 10;
     public boolean catEat = false;
 
     public Cat(String name, int needFood) {
