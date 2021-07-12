@@ -1,10 +1,9 @@
 package hw8;
 
-import java.awt.*;
+import javax.swing.*;
 import java.util.Random;
-import java.util.Scanner;
 
-public class Logic {
+public class Logic extends BattleMap {
     static int SIZE = 3;
     static int DOTS_TO_WIN = 3;
 
@@ -17,15 +16,25 @@ public class Logic {
     static final Random random = new Random();
     static boolean isGameFinished;
 
+    public Logic(GameWindow gameWindow) {
+        super(gameWindow);
+    }
+
     public static void go() {
         isGameFinished = true;
         printMap();
         if (checkWinLines(DOT_X, DOTS_TO_WIN)) {
             System.out.println("Вы победили!");
+            System.out.println("Координаты:" + Logic.x1 + " " + Logic.y1 + "  " + Logic.x2 + " " + Logic.y2);
+            JOptionPane.showMessageDialog(null, "ПОЗДРАВЛЯЮ! Вы ВЫИГРАЛИ!!!",
+                    "ПОБЕДА!!!", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         if (isFull()) {
             System.out.println("Ничья");
+            System.out.println("Координаты:" + Logic.x1 + " " + Logic.y1 + "  " + Logic.x2 + " " + Logic.y2);
+            JOptionPane.showMessageDialog(null, "Эх, просто ничья.", "Ничья!",
+                    JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -33,10 +42,18 @@ public class Logic {
         printMap();
         if (checkWinLines(DOT_O, DOTS_TO_WIN)) {
             System.out.println("Компьютер победил. Сейчас их даже в шахматы не выиграть...");
+            System.out.println("Координаты:" + Logic.x1 + " " + Logic.y1 + "  " + Logic.x2 + " " + Logic.y2);
+
+            JOptionPane.showMessageDialog(null, "Компьютер победил. Сейчас их даже в шахматы " +
+                    "не выиграть...", "Вы проиграли!", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         if (isFull()) {
             System.out.println("Ничья");
+            System.out.println("Координаты:" + Logic.x1 + " " + Logic.y1 + "  " + Logic.x2 + " " + Logic.y2);
+            JOptionPane.showMessageDialog(null, "Эх, просто ничья.", "Ничья!",
+                    JOptionPane.INFORMATION_MESSAGE);
+
             return;
         }
 
@@ -112,6 +129,7 @@ public class Logic {
             for (int j = 0; j < SIZE; j++) {
                 if (isCellValid(i, j)) {
                     map[i][j] = DOT_O;
+
                     if (checkWinLines(DOT_O, DOTS_TO_WIN - 1) &&
                             Math.random() < 0.5) { //  фактор случайности, чтобы сбивал не все время первый попавшийся путь.
                         return;
@@ -136,13 +154,14 @@ public class Logic {
             }
         }
 
+
 // Сходить в произвольную не занятую ячейку
         do {
             y = random.nextInt(SIZE);
             x = random.nextInt(SIZE);
         } while (!isCellValid(y, x));
-
         map[y][x] = DOT_O;
+
     }
 
     public static boolean isCellValid(int y, int x) {
@@ -164,7 +183,10 @@ public class Logic {
         return true;
     }
 
-
+    public static int x1;
+    public static int x2;
+    public static int y1;
+    public static int y2;
 
     static boolean checkLine(int cy, int cx, int vy, int vx, char dot, int dotsToWin) {
         if (cx + vx * (dotsToWin - 1) > SIZE - 1 || cy + vy * (dotsToWin - 1) > SIZE - 1 ||
@@ -175,6 +197,9 @@ public class Logic {
         for (int i = 0; i < dotsToWin; i++) {
             if (map[cy + i * vy][cx + i * vx] != dot) {
                 return false;
+            } else {
+                y2 = cy + i * vy;
+                x2 = cx + i * vx;
             }
         }
         return true;
@@ -187,7 +212,10 @@ public class Logic {
                         checkLine(i, j, 1, 0, dot, dotsToWin) ||
                         checkLine(i, j, 1, 1, dot, dotsToWin) ||
                         checkLine(i, j, -1, 1, dot, dotsToWin)) {
+                    y1 = i;
+                    x1 = j;
                     return true;
+
                 }
             }
         }
