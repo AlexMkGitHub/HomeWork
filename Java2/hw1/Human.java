@@ -35,3 +35,4 @@ public class Human extends Actions {
         return false;
     }
 }
+
