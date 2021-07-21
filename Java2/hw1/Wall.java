@@ -15,3 +15,4 @@ public class Wall implements Obstacles {
         this.wallHeight = wallHeight;
     }
 }
+

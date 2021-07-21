@@ -12,3 +12,4 @@ public class RunningTrack implements Obstacles {
     }
 
 }
+
