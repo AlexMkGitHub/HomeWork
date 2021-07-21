@@ -1,4 +1,4 @@
-package hw6;
+package Java1.hw6;
 
 public class Cat extends Animal {
     static int catNumbers = 0;
