@@ -1,4 +1,4 @@
-package Java2.hw1;
+package hw1;
 
 public class Main_Enum {
 
