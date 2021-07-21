@@ -1,4 +1,4 @@
-package hw7;
+package Java1.hw7;
 
 public class Plate {
     private int plateSize;

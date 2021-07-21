@@ -1,4 +1,4 @@
-package hw3;
+package Java1.hw3;
 
 import java.util.Arrays;
 import java.util.Random;

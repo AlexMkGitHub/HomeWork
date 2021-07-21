@@ -1,4 +1,4 @@
-package hw6;
+package Java1.hw6;
 
 public class Animal {
     String name;

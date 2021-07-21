@@ -1,4 +1,4 @@
-package hw5;
+package Java1.hw5;
 
 public class Person {
 

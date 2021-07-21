@@ -1,4 +1,4 @@
-package hw4;
+package Java1.hw4;
 
 import java.util.Random;
 import java.util.Scanner;
