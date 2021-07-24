@@ -25,5 +25,3 @@ public class Main_SortWords {
 
     }
 }
-
-

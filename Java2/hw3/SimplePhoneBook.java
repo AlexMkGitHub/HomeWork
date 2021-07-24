@@ -29,6 +29,5 @@ public class SimplePhoneBook {
         });
         System.out.println("За абонентом по фамилии " + name + " числятся следующие номера: " + setPhone);
 
-
     }
 }
