@@ -20,10 +20,10 @@ public class Main_PhoneBook {
 
         System.out.println();
 
-        book.get("Иванов");
-        book.get("Сидоров");
-        book.get("Петров");
-        book.get("Васильев");
+        System.out.println("Васильев: " + book.get("Васильев"));
+        System.out.println("Иванов: " + book.get("Иванов"));
+        System.out.println("Сидоров: " + book.get("Сидоров"));
+        System.out.println("Петров: " + book.get("Петров"));
 
     }
 }
