@@ -17,7 +17,7 @@ public class SimplePhoneBook {
 
     }
 
-    public void get(String name) {
+    public HashSet<Integer> get(String name) {
         HashSet<Integer> setPhone = new HashSet<>();
         this.name = name;
 
@@ -27,7 +27,6 @@ public class SimplePhoneBook {
 
             }
         });
-        System.out.println("За абонентом по фамилии " + name + " числятся следующие номера: " + setPhone);
-
+        return setPhone;
     }
 }
