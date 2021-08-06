@@ -1,4 +1,5 @@
 package hw1;
+import hw1.*;
 
 public class Main_Enum {
 
