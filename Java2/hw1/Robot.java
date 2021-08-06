@@ -1,5 +1,7 @@
 package hw1;
 
+import hw1.*;
+
 public class Robot extends Actions {
 
     public Robot() {
