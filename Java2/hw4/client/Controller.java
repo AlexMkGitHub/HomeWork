@@ -1,4 +1,4 @@
-package hw4.sample;
+package hw4.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
