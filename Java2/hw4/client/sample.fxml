@@ -5,13 +5,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-<AnchorPane prefHeight="482.0" prefWidth="686.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hw4.sample.Controller">
+<AnchorPane prefHeight="482.0" prefWidth="686.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hw4.client.Controller">
     <stylesheets>
         <URL value="@/hw4/css/chatStyle.css"/>
     </stylesheets>
     <TextArea fx:id="textArea" layoutX="21.0" layoutY="27.0" prefHeight="360.0" prefWidth="643.0"
               AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.8"
-              AnchorPane.topAnchor="27.0"/>
+              AnchorPane.topAnchor="27.0" editable="false"/>
     <TextField fx:id="textField" layoutX="20.0" layoutY="402.0" onAction="#send" prefHeight="44.0" prefWidth="524.0"
                AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="142.0"/>
     <Button layoutX="569.0" layoutY="402.0" mnemonicParsing="false" onAction="#send" prefHeight="44.0" prefWidth="94.0"
