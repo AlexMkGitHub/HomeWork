@@ -41,9 +41,23 @@ public class Server {
     }
 
     public void broadcastMsg(ClientHandler sender, String msg) {
-        String message = String.format("[%s]: %s ", sender.getNickname(), msg);
+        String message = String.format("[%s]: %s", sender.getNickname(), msg);
         for (ClientHandler c : clients) {
             c.sendMsg(message);
+        }
+    }
+
+    public void privatMsg(ClientHandler sender, String recipient, String msg) {
+        for (ClientHandler c : clients) {
+            if (c.getNickname().equals(recipient)) {
+                c.sendMsg(String.format("[Личное сообщение] от [%s]: %s", sender.getNickname(), msg));
+            }
+            if (sender.getNickname().equals(recipient)) {
+                return;
+            }
+            if (c.getNickname().equals(sender.getNickname())) {
+                c.sendMsg(String.format("[Вы] -> [%s]: %s", recipient, msg));
+            }
         }
     }
 
@@ -58,6 +72,5 @@ public class Server {
     public AuthService getAuthService() {
         return authService;
     }
-
 
 }
