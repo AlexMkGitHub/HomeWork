@@ -29,39 +29,45 @@ public class ClientHandler {
                     //Цикл аутентификации
                     while (true) {
                         String str = in.readUTF();
-                            if (str.equals("/end")) {
-                                sendMsg("/end");
-                                System.out.println("Client disconnected");
-                                break;
-                            }
-                            if (str.startsWith("/auth ")) {
-                                String[] token = str.split("\\s+");
-                                nickname = server.getAuthService()
-                                        .getNicknameByLoginAndPassword(token[1], token[2]);
-                                if (nickname != null){
-                                    server.subscribe(this);
-                                    authenticated = true;
-                                    sendMsg("/authok " + nickname);
-                                    break;
-                                }else {
-                                    sendMsg("Неверный логин или пароль!");
-                                }
-
-                            }
+                        if (str.equals("/end")) {
+                            sendMsg("/end");
+                            System.out.println("Client disconnected");
+                            break;
                         }
+                        if (str.startsWith("/auth ")) {
+                            String[] token = str.split("\\s+");
+                            nickname = server.getAuthService()
+                                    .getNicknameByLoginAndPassword(token[1], token[2]);
+                            if (nickname != null) {
+                                server.subscribe(this);
+                                authenticated = true;
+                                sendMsg("/authok " + nickname);
+                                break;
+                            } else {
+                                sendMsg("Неверный логин или пароль!");
+                            }
+
+                        }
+                    }
 
                     //Цикл работы
                     while (authenticated) {
                         String str = in.readUTF();
-
                         if (str.equals("/end")) {
                             sendMsg("/end");
                             System.out.println("Client disconnected");
                             break;
                         }
 
-                        server.broadcastMsg(this, str);
+                        if (str.startsWith("/w ")) {
+                            String[] token = str.split("\\s+", 3);
+                            server.privatMsg(this, token[1], token[2]);
+                            System.out.println(token[2]);
+                        } else {
+                            server.broadcastMsg(this, str);
+                        }
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {

@@ -24,5 +24,4 @@
         <Button text="Send" onAction="#sendMsg"/>
     </HBox>
 
-
 </VBox>
