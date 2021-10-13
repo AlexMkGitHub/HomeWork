@@ -16,37 +16,35 @@ public class SimpleAuthService implements AuthService {
         }
     }
 
-    private List<UserData> users;
+    private List<UserData> user;
 
     public SimpleAuthService() {
-        this.users = new ArrayList<>();
-        users.add(new UserData("qwe", "qwe", "qwe"));
-        users.add(new UserData("asd", "asd", "asd"));
-        users.add(new UserData("zxc", "zxc", "zxc"));
-        for (int i = 1; i < 10; i++) {
-            users.add(new UserData("login" + i, "pass" + i, "nick" + i));
-        }
+        this.user = new ArrayList<>();
+        user.add(new UserData("qwe", "qwe", "qwe"));
+        user.add(new UserData("asd", "asd", "asd"));
+        user.add(new UserData("zxc", "zxc", "zxc"));
     }
 
     @Override
     public String getNicknameByLoginAndPassword(String login, String password) {
-        for (UserData u : users) {
+
+        for (UserData u : user) {
             if (u.login.equals(login) && u.password.equals(password)) {
                 return u.nickname;
             }
         }
-
         return null;
     }
 
     @Override
     public boolean registration(String login, String password, String nickname) {
-        for (UserData u : users) {
+        for (UserData u : user) {
             if (u.login.equals(login) || u.nickname.equals(nickname)) {
                 return false;
             }
         }
-        users.add(new UserData(login, password, nickname));
+        user.add(new UserData(login, password, nickname));
         return true;
     }
+
 }

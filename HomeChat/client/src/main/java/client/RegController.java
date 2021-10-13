@@ -29,19 +29,19 @@ public class RegController {
         String nickname = nicknameField.getText().trim();
 
         if (login.equals("") || password.equals("") || nickname.equals("")) {
-            textArea.appendText("Поля должны быть не пустые\n");
+            textArea.appendText("Поля должны быть не пустые!\n");
             return;
         }
-
         if (login.contains(" ") || password.contains(" ") || nickname.contains(" ")) {
-            textArea.appendText("Логин пароль и никнейм не должны содержать пробелы\n");
+            textArea.appendText("Логин, пароль и никнейм не должны содержать пробелы!\n");
             return;
         }
 
         controller.registration(login, password, nickname);
+
     }
 
-    public void regResult(String msg) {
-        textArea.appendText(msg + "\n");
+    public void regResult(String msg){
+textArea.appendText(msg + "\n");
     }
 }

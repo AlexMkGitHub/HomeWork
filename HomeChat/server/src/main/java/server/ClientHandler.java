@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 
 public class ClientHandler {
     Socket socket;
@@ -16,7 +15,10 @@ public class ClientHandler {
     private String nickname;
     private String login;
 
+
     public ClientHandler(Socket socket, Server server) {
+
+
         try {
             this.socket = socket;
             this.server = server;
@@ -26,11 +28,9 @@ public class ClientHandler {
 
             new Thread(() -> {
                 try {
-                    socket.setSoTimeout(120000);
-                    // цикл аутентификации
+                    //Цикл аутентификации
                     while (true) {
                         String str = in.readUTF();
-
                         if (str.equals("/end")) {
                             sendMsg("/end");
                             System.out.println("Client disconnected");
@@ -46,13 +46,12 @@ public class ClientHandler {
                                     sendMsg("/authok " + nickname);
                                     server.subscribe(this);
                                     authenticated = true;
-                                    socket.setSoTimeout(0);
                                     break;
                                 } else {
-                                    sendMsg("С этим логином уже вошли");
+                                    sendMsg("С этим логином уже вошли!");
                                 }
                             } else {
-                                sendMsg("Неверный логин / пароль");
+                                sendMsg("Неверный логин или пароль!");
                             }
                         }
 
@@ -62,39 +61,36 @@ public class ClientHandler {
                                 continue;
                             }
 
-                            boolean regOk = server.getAuthService().
-                                    registration(token[1], token[2], token[3]);
+                            boolean regOk = server.getAuthService().registration(token[1], token[2], token[3]);
                             if (regOk) {
                                 sendMsg("/regok");
-                            } else {
+                            }else {
                                 sendMsg("/regno");
                             }
                         }
                     }
-                    // цикл работы
+
+                    //Цикл работы
                     while (authenticated) {
                         String str = in.readUTF();
+                        if (str.equals("/end")) {
+                            sendMsg("/end");
+                            System.out.println("Client disconnected");
+                            break;
+                        }
 
-                        if (str.startsWith("/")) {
-                            if (str.equals("/end")) {
-                                sendMsg("/end");
-                                System.out.println("Client disconnected");
-                                break;
+                        if (str.startsWith("/w ")) {
+                            String[] token = str.split("\\s+", 3);
+                            if (token.length < 3) {
+                                continue;
                             }
-
-                            if (str.startsWith("/w")) {
-                                String[] token = str.split("\\s+", 3);
-                                if (token.length < 3) {
-                                    continue;
-                                }
-                                server.privateMsg(this, token[1], token[2]);
-                            }
+                            server.privatMsg(this, token[1], token[2]);
+                            System.out.println(token[2]);
                         } else {
                             server.broadcastMsg(this, str);
                         }
                     }
-                }catch (SocketTimeoutException e){
-                    sendMsg("/end");
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
@@ -105,10 +101,12 @@ public class ClientHandler {
                         e.printStackTrace();
                     }
                 }
+
             }).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public void sendMsg(String msg) {

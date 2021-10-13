@@ -14,6 +14,7 @@ public class Server {
     private List<ClientHandler> clients;
     private AuthService authService;
 
+
     public Server() {
         clients = new CopyOnWriteArrayList<>();
         authService = new SimpleAuthService();
@@ -21,11 +22,13 @@ public class Server {
             server = new ServerSocket(PORT);
             System.out.println("Server started!");
 
+
             while (true) {
                 socket = server.accept();
                 System.out.println("Client connected");
                 new ClientHandler(socket, this);
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -38,31 +41,31 @@ public class Server {
     }
 
     public void broadcastMsg(ClientHandler sender, String msg) {
-        String message = String.format("[ %s ]: %s", sender.getNickname(), msg);
+        String message = String.format("[%s]: %s ", sender.getNickname(), msg);
         for (ClientHandler c : clients) {
             c.sendMsg(message);
         }
     }
 
-    public void privateMsg(ClientHandler sender, String receiver, String msg) {
-        String message = String.format("[ %s ] to [ %s ] : %s", sender.getNickname(), receiver, msg);
+    public void privatMsg(ClientHandler sender, String recipient, String msg) {
         for (ClientHandler c : clients) {
-            if (c.getNickname().equals(receiver)) {
-                c.sendMsg(message);
-                if (!c.equals(sender)) {
-                    sender.sendMsg(message);
-                }
+            if (c.getNickname().equals(recipient)) {
+                c.sendMsg(String.format("[Личное сообщение] от [%s]: %s", sender.getNickname(), msg));
+            }
+            if (sender.getNickname().equals(recipient)) {
                 return;
             }
+            if (c.getNickname().equals(sender.getNickname())) {
+                c.sendMsg(String.format("[Вы] -> [%s]: %s", recipient, msg));
+            }
         }
-        sender.sendMsg("Not found user: "+ receiver);
     }
 
     public boolean isLoginAuthenticated(String login) {
         for (ClientHandler c : clients) {
-           if(c.getLogin().equals(login)){
-               return true;
-           }
+            if (c.getLogin().equals(login)) {
+                return true;
+            }
         }
         return false;
     }
@@ -72,7 +75,6 @@ public class Server {
         for (ClientHandler c : clients) {
             sb.append(" ").append(c.getNickname());
         }
-
         String message = sb.toString();
         for (ClientHandler c : clients) {
             c.sendMsg(message);
@@ -92,4 +94,5 @@ public class Server {
     public AuthService getAuthService() {
         return authService;
     }
+
 }
