@@ -41,7 +41,7 @@ public class RegController {
 
     }
 
-    public void regResult(String msg){
-textArea.appendText(msg + "\n");
+    public void regResult(String msg) {
+        textArea.appendText(msg + "\n");
     }
 }

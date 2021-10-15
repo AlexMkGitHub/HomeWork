@@ -48,7 +48,7 @@ public class ClientHandler {
                                     authenticated = true;
                                     break;
                                 } else {
-                                    sendMsg("С этим логино уже вошли!");
+                                    sendMsg("С этим логином уже вошли!");
                                 }
                             } else {
                                 sendMsg("Неверный логин или пароль!");
@@ -64,7 +64,7 @@ public class ClientHandler {
                             boolean regOk = server.getAuthService().registration(token[1], token[2], token[3]);
                             if (regOk) {
                                 sendMsg("/regok");
-                            }else {
+                            } else {
                                 sendMsg("/regno");
                             }
                         }
