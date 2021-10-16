@@ -10,6 +10,7 @@ public class ClientHandler {
     Server server;
     DataInputStream in;
     DataOutputStream out;
+    WorkWithSql ws = new WorkWithSql();
 
     private boolean authenticated;
     private String nickname;
@@ -31,11 +32,6 @@ public class ClientHandler {
                     //Цикл аутентификации
                     while (true) {
                         String str = in.readUTF();
-                        if (str.equals("/end")) {
-                            sendMsg("/end");
-                            System.out.println("Client disconnected");
-                            break;
-                        }
                         if (str.startsWith("/auth ")) {
                             String[] token = str.split("\\s+");
                             nickname = server.getAuthService()
@@ -68,6 +64,7 @@ public class ClientHandler {
                                 sendMsg("/regno");
                             }
                         }
+
                     }
 
                     //Цикл работы
@@ -79,16 +76,35 @@ public class ClientHandler {
                             break;
                         }
 
-                        if (str.startsWith("/w ")) {
-                            String[] token = str.split("\\s+", 3);
-                            if (token.length < 3) {
-                                continue;
+                        if (str.startsWith("/chNick ") || str.startsWith("/w ")) {
+                            if (str.startsWith("/chNick ")) {
+                                String[] token = str.split("\\s+", 3);
+                                if (token.length < 3) {
+                                    continue;
+                                }
+                                boolean chOk = ws.updateNickname(token[1], token[2]);
+                                if (chOk) {
+                                    nickname = token[2];
+                                    server.updateClient(this);
+                                    server.broadcastSystemMsg(token[1] + " сменил ник на  " + token[2]);
+                                    sendMsg("/chNickOk");
+                                } else {
+                                    sendMsg("/chNickFalse");
+                                }
                             }
-                            server.privatMsg(this, token[1], token[2]);
-                            System.out.println(token[2]);
+
+                            if (str.startsWith("/w ")) {
+                                String[] token = str.split("\\s+", 3);
+                                if (token.length < 3) {
+                                    continue;
+                                }
+                                server.privatMsg(this, token[1], token[2]);
+                                System.out.println(nickname + " отправил " + token[1] + ": " + token[2]);
+                            }
                         } else {
                             server.broadcastMsg(this, str);
                         }
+
                     }
 
                 } catch (IOException e) {

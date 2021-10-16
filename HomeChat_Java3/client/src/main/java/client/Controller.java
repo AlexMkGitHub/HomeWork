@@ -53,6 +53,7 @@ public class Controller implements Initializable {
     private Stage stage;
     private Stage regStage;
     private RegController regController;
+    private NickChangeController chNickController;
 
     public void setAuthencated(boolean authencated) {
         this.authencated = authencated;
@@ -142,6 +143,15 @@ public class Controller implements Initializable {
                                     }
                                 });
                             }
+
+                            if (str.startsWith("/chNickOk")) {
+                                chNickController.changeResult("Ник успешно изменён.");
+                            }
+
+                            if (str.startsWith("/chNickFalse")) {
+                                chNickController.changeResult("Данный ник занят!");
+                            }
+
                         } else {
                             textArea.appendText(str + "\n");
                         }
@@ -252,4 +262,38 @@ public class Controller implements Initializable {
         }
     }
 
+    public void changeNickName(String newNickname) {
+        String msg = String.format("/chNick %s %s", nickname, newNickname);
+
+        if (socket == null || socket.isClosed()) {
+            connect();
+
+        }
+
+        try {
+            out.writeUTF(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void chNick(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource("/changeNickname.fxml"));
+            Parent root = fxmlloader.load();
+            regStage = new Stage();
+            regStage.setTitle("Change nickname");
+            regStage.setScene(new Scene(root, 600, 400));
+            chNickController = fxmlloader.getController();
+            chNickController.setController(this);
+
+            regStage.initStyle(StageStyle.UTILITY);
+            regStage.initModality(Modality.APPLICATION_MODAL);
+            regStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

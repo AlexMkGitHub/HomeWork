@@ -47,6 +47,13 @@ public class Server {
         }
     }
 
+    public void broadcastSystemMsg(String msg) {
+        String message = String.format("%s", msg);
+        for (ClientHandler c : clients) {
+            c.sendMsg(message);
+        }
+    }
+
     public void privatMsg(ClientHandler sender, String recipient, String msg) {
         for (ClientHandler c : clients) {
             if (c.getNickname().equals(recipient)) {
@@ -60,6 +67,7 @@ public class Server {
             }
         }
     }
+
 
     public boolean isLoginAuthenticated(String login) {
         for (ClientHandler c : clients) {
@@ -88,6 +96,12 @@ public class Server {
 
     public void unsubscribe(ClientHandler clientHandler) {
         clients.remove(clientHandler);
+        broadcastClientList();
+    }
+
+    public void updateClient(ClientHandler clientHandler) {
+        clients.remove(clientHandler);
+        clients.add(clientHandler);
         broadcastClientList();
     }
 
