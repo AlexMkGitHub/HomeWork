@@ -99,12 +99,6 @@ public class Server {
         broadcastClientList();
     }
 
-    public void updateClient(ClientHandler clientHandler) {
-        clients.remove(clientHandler);
-        clients.add(clientHandler);
-        broadcastClientList();
-    }
-
     public AuthService getAuthService() {
         return authService;
     }

@@ -85,7 +85,7 @@ public class ClientHandler {
                                 boolean chOk = ws.updateNickname(token[1], token[2]);
                                 if (chOk) {
                                     nickname = token[2];
-                                    server.updateClient(this);
+                                    server.broadcastClientList();
                                     server.broadcastSystemMsg(token[1] + " сменил ник на  " + token[2]);
                                     sendMsg("/chNickOk");
                                 } else {

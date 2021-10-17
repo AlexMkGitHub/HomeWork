@@ -132,10 +132,6 @@ public class WorkWithSql {
         }
     }
 
-    private void deleteFromDb() throws SQLException {
-        stmt.executeUpdate("DELETE FROM registration WHERE login = 'admin1';");
-    }
-
     private void clearDb() {
         try {
             connect();
