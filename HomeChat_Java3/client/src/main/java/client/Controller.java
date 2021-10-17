@@ -54,6 +54,7 @@ public class Controller implements Initializable {
     private Stage regStage;
     private RegController regController;
     private NickChangeController chNickController;
+    private String newNickName;
 
     public void setAuthencated(boolean authencated) {
         this.authencated = authencated;
@@ -146,6 +147,7 @@ public class Controller implements Initializable {
 
                             if (str.startsWith("/chNickOk")) {
                                 chNickController.changeResult("Ник успешно изменён.");
+                                setTitle(newNickName);
                             }
 
                             if (str.startsWith("/chNickFalse")) {
@@ -262,8 +264,9 @@ public class Controller implements Initializable {
         }
     }
 
-    public void changeNickName(String newNickname) {
-        String msg = String.format("/chNick %s %s", nickname, newNickname);
+    public void changeNickName(String newNick) {
+        newNickName = newNick;
+        String msg = String.format("/chNick %s %s", nickname, newNick);
 
         if (socket == null || socket.isClosed()) {
             connect();
