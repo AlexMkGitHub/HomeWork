@@ -18,12 +18,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -47,7 +49,6 @@ public class Controller implements Initializable {
     private final String IP_ADRESS = "localhost";
     private DataInputStream in;
     private DataOutputStream out;
-
     private boolean authencated;
     private String nickname;
     private Stage stage;
@@ -55,6 +56,10 @@ public class Controller implements Initializable {
     private RegController regController;
     private NickChangeController chNickController;
     private String newNickName;
+    //private File file = new File("localchat.txt");
+    private DataOutputStream outLocalFileChat;
+    //private DataInputStream inLocalFileChat;
+
 
     public void setAuthencated(boolean authencated) {
         this.authencated = authencated;
@@ -112,6 +117,32 @@ public class Controller implements Initializable {
                             if (str.startsWith("/authok")) {
                                 nickname = str.split("\\s")[1];
                                 setAuthencated(true);
+//                                int x;
+//                               //int file = inLocalFileChat.read();
+//                                while ((x = inLocalFileChat.read()) != -1){
+//                                    textArea.appendText((Files.readAllLines(file)) );
+//                                    System.out.println();
+//                                }
+                                //List<String> lines = new ArrayList<String>(Files.readAllLines(Paths.get("localchat.txt")));
+//                                List lines = new ArrayList<String>();
+//                                inLocalFileChat = new DataInputStream(new FileInputStream("localchat.txt"));
+//                                int x;
+//                                int l = 0;
+//                                while ((x = inLocalFileChat.read()) != -1) {
+//                                    lines.add(x);
+//                                    System.out.println();
+//                                    textArea.appendText(lines.get(l).toString());
+//
+//                                }
+
+
+                                //System.out.println(lines);
+                                //textArea.appendText(lines.toString());
+
+
+                                //System.out.println(inLocalFileChat.read());
+                                //textArea.appendText((Files.readAllLines(Paths.get("localchat.txt"))).toString());
+
                                 break;
 
                             }
@@ -127,6 +158,16 @@ public class Controller implements Initializable {
                         }
 
                     }
+
+                    List list = Files.readAllLines(Paths.get("localchat.txt"));
+                    for (int i = 0; i < list.size(); i++){
+                        System.out.println(list.get(i));
+                        textArea.appendText (list.get(i).toString());
+                        textArea.appendText (""+"\n");
+
+                    }
+
+                    outLocalFileChat = new DataOutputStream(new FileOutputStream("localchat.txt", true));
 
                     //Цикл работы
                     while (authencated) {
@@ -156,15 +197,22 @@ public class Controller implements Initializable {
 
                         } else {
                             textArea.appendText(str + "\n");
+                            outLocalFileChat.writeUTF(str + "\n");
                         }
                     }
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
+                    try {
+                        outLocalFileChat.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     System.out.println("Disconnected");
                     setAuthencated(false);
                     try {
+                        outLocalFileChat.close();
                         socket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
