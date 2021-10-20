@@ -22,12 +22,10 @@ import javafx.stage.WindowEvent;
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    private final History history = new History(this);
     @FXML
     private ListView<String> clientList;
     @FXML
@@ -56,7 +54,7 @@ public class Controller implements Initializable {
     private RegController regController;
     private NickChangeController chNickController;
     private String newNickName;
-    private DataOutputStream outLocalFileChat;
+    //private DataOutputStream outLocalFileChat;
 
     public void setAuthencated(boolean authencated) {
         this.authencated = authencated;
@@ -72,7 +70,7 @@ public class Controller implements Initializable {
         }
         setTitle(nickname);
         textArea.clear();
-        lastChatHistory();
+        history.lastChatHistory();
     }
 
     @Override
@@ -154,8 +152,8 @@ public class Controller implements Initializable {
                             }
                         } else {
                             textArea.appendText(str + "\n");
-                            outLocalFileChat.writeUTF(str);
-                            outLocalFileChat.writeUTF("\n");
+                            history.getOutLocalFileChat().writeUTF(str);
+                            history.getOutLocalFileChat().writeUTF("\n");
                         }
                     }
 
@@ -166,7 +164,7 @@ public class Controller implements Initializable {
                     setAuthencated(false);
                     try {
                         textArea.clear();
-                        outLocalFileChat.close();
+                        history.getOutLocalFileChat().close();
                         socket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -266,31 +264,6 @@ public class Controller implements Initializable {
         }
     }
 
-    private void lastChatHistory() {
-        try {
-            File file = new File("history_" + enterLogin + ".txt");
-            if (file.exists()) {
-                List list = Files.readAllLines(Paths.get("history_" + enterLogin + ".txt"));
-                int n = list.size() - 100;
-                if (n < 0) n = 0;
-                for (int i = n; i < list.size(); i++) {
-                    if (list.get(i).toString() == null) {
-                        return;
-                    } else {
-                        textArea.appendText(list.get(i).toString().substring(2));
-                        textArea.appendText("" + "\n");
-                    }
-                }
-            }
-
-            //Если надо, чтобы история чата начиналась с чистого листа, то убрать true
-            outLocalFileChat = new DataOutputStream(new FileOutputStream("history_" + enterLogin + ".txt", true));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void changeNickName(String newNick) {
         newNickName = newNick;
         String msg = String.format("/chNick %s %s", nickname, newNick);
@@ -326,4 +299,13 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public TextArea getTextArea() {
+        return textArea;
+    }
+
+    public String getEnterLogin() {
+        return enterLogin;
+    }
+
 }
