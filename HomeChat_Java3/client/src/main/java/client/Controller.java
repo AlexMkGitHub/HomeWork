@@ -18,13 +18,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -51,15 +50,13 @@ public class Controller implements Initializable {
     private DataOutputStream out;
     private boolean authencated;
     private String nickname;
+    private String enterLogin = "";
     private Stage stage;
     private Stage regStage;
     private RegController regController;
     private NickChangeController chNickController;
     private String newNickName;
-    //private File file = new File("localchat.txt");
     private DataOutputStream outLocalFileChat;
-    //private DataInputStream inLocalFileChat;
-
 
     public void setAuthencated(boolean authencated) {
         this.authencated = authencated;
@@ -70,13 +67,12 @@ public class Controller implements Initializable {
         clientList.setVisible(authencated);
         clientList.setManaged(authencated);
 
-
         if (!authencated) {
             nickname = "";
         }
         setTitle(nickname);
         textArea.clear();
-
+        lastChatHistory();
     }
 
     @Override
@@ -117,34 +113,7 @@ public class Controller implements Initializable {
                             if (str.startsWith("/authok")) {
                                 nickname = str.split("\\s")[1];
                                 setAuthencated(true);
-//                                int x;
-//                               //int file = inLocalFileChat.read();
-//                                while ((x = inLocalFileChat.read()) != -1){
-//                                    textArea.appendText((Files.readAllLines(file)) );
-//                                    System.out.println();
-//                                }
-                                //List<String> lines = new ArrayList<String>(Files.readAllLines(Paths.get("localchat.txt")));
-//                                List lines = new ArrayList<String>();
-//                                inLocalFileChat = new DataInputStream(new FileInputStream("localchat.txt"));
-//                                int x;
-//                                int l = 0;
-//                                while ((x = inLocalFileChat.read()) != -1) {
-//                                    lines.add(x);
-//                                    System.out.println();
-//                                    textArea.appendText(lines.get(l).toString());
-//
-//                                }
-
-
-                                //System.out.println(lines);
-                                //textArea.appendText(lines.toString());
-
-
-                                //System.out.println(inLocalFileChat.read());
-                                //textArea.appendText((Files.readAllLines(Paths.get("localchat.txt"))).toString());
-
                                 break;
-
                             }
                             if (str.equals("/regok")) {
                                 regController.regResult("Регистрация прошла успешно.");
@@ -158,17 +127,6 @@ public class Controller implements Initializable {
                         }
 
                     }
-
-                    List list = Files.readAllLines(Paths.get("localchat.txt"));
-                    for (int i = 0; i < list.size(); i++){
-                        System.out.println(list.get(i));
-                        textArea.appendText (list.get(i).toString());
-                        textArea.appendText (""+"\n");
-
-                    }
-
-                    outLocalFileChat = new DataOutputStream(new FileOutputStream("localchat.txt", true));
-
                     //Цикл работы
                     while (authencated) {
                         String str = in.readUTF();
@@ -194,24 +152,20 @@ public class Controller implements Initializable {
                             if (str.startsWith("/chNickFalse")) {
                                 chNickController.changeResult("Данный ник занят!");
                             }
-
                         } else {
                             textArea.appendText(str + "\n");
-                            outLocalFileChat.writeUTF(str + "\n");
+                            outLocalFileChat.writeUTF(str);
+                            outLocalFileChat.writeUTF("\n");
                         }
                     }
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-                    try {
-                        outLocalFileChat.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                     System.out.println("Disconnected");
                     setAuthencated(false);
                     try {
+                        textArea.clear();
                         outLocalFileChat.close();
                         socket.close();
                     } catch (IOException e) {
@@ -245,6 +199,7 @@ public class Controller implements Initializable {
         }
 
         String login = loginField.getText().trim();
+        enterLogin = login;
         String password = passwordField.getText().trim();
         String msg = String.format("/auth %s %s", login, password);
 
@@ -265,7 +220,6 @@ public class Controller implements Initializable {
             }
 
         });
-
     }
 
     public void clientListClick(MouseEvent mouseEvent) {
@@ -307,6 +261,31 @@ public class Controller implements Initializable {
 
         try {
             out.writeUTF(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void lastChatHistory() {
+        try {
+            File file = new File("history_" + enterLogin + ".txt");
+            if (file.exists()) {
+                List list = Files.readAllLines(Paths.get("history_" + enterLogin + ".txt"));
+                int n = list.size() - 100;
+                if (n < 0) n = 0;
+                for (int i = n; i < list.size(); i++) {
+                    if (list.get(i).toString() == null) {
+                        return;
+                    } else {
+                        textArea.appendText(list.get(i).toString().substring(2));
+                        textArea.appendText("" + "\n");
+                    }
+                }
+            }
+
+            //Если надо, чтобы история чата начиналась с чистого листа, то убрать true
+            outLocalFileChat = new DataOutputStream(new FileOutputStream("history_" + enterLogin + ".txt", true));
+
         } catch (IOException e) {
             e.printStackTrace();
         }

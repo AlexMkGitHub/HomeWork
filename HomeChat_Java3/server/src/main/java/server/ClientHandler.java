@@ -86,7 +86,7 @@ public class ClientHandler {
                                 if (chOk) {
                                     nickname = token[2];
                                     server.broadcastClientList();
-                                    server.broadcastSystemMsg(token[1] + " сменил ник на  " + token[2]);
+                                    server.broadcastSystemMsg("[" + token[1] + "]" + " сменил ник на  " + "[" + token[2] + "]");
                                     sendMsg("/chNickOk");
                                 } else {
                                     sendMsg("/chNickFalse");
