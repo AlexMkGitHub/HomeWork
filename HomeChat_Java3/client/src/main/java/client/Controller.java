@@ -25,7 +25,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    private final History history = new History(this);
+    private final History history = new History();
     @FXML
     private ListView<String> clientList;
     @FXML
@@ -55,7 +55,6 @@ public class Controller implements Initializable {
     private NickChangeController chNickController;
     private String newNickName;
 
-
     public void setAuthencated(boolean authencated) {
         this.authencated = authencated;
         authPanel.setVisible(!authencated);
@@ -70,7 +69,6 @@ public class Controller implements Initializable {
         }
         setTitle(nickname);
         textArea.clear();
-
     }
 
     @Override
@@ -165,19 +163,14 @@ public class Controller implements Initializable {
                         System.out.println("Disconnected");
                         setAuthencated(false);
                         textArea.clear();
-                        //history.getOutLocalFileChat().close();
                         history.checkHistoryLength(enterLogin);
                         history.getOutLocalFileChat().close();
                         socket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
-
             }).start();
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -192,7 +185,6 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void tryToAuth(ActionEvent actionEvent) {
@@ -303,5 +295,4 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
-
 }

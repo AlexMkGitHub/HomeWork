@@ -6,13 +6,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class History {
-    private final Controller controller;
     private PrintWriter outLocalFileChat;
     File file;
-
-    public History(Controller controller) {
-        this.controller = controller;
-    }
 
     public String lastChatHistory(String login) {
         StringBuilder sb = new StringBuilder();
@@ -58,15 +53,12 @@ public class History {
                         continue;
                     }
                     sb.append(list.get(i).toString()).append("\n");
-                    //outLocalFileChat.write(list.get(i).toString() + "\n");
                 }
                 outLocalFileChat.write(sb.toString());
-
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public PrintWriter getOutLocalFileChat() {
