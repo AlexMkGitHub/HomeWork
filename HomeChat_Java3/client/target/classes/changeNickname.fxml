@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" alignment="center"
+      fx:controller="client.NickChangeController">
+    <stylesheets>
+        <URL value="@/css/style.css"/>
+    </stylesheets>
+
+    <TextField fx:id="newNick" promptText="New nickname" HBox.hgrow="ALWAYS"/>
+
+    <TextArea fx:id="textArea" editable="false" VBox.vgrow="ALWAYS"/>
+
+
+    <Button text="Change nickname" onAction="#tryToChange"/>
+
+</VBox>

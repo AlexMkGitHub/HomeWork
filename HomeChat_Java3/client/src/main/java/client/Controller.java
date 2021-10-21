@@ -19,14 +19,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    private final History history = new History();
     @FXML
     private ListView<String> clientList;
     @FXML
@@ -47,9 +46,9 @@ public class Controller implements Initializable {
     private final String IP_ADRESS = "localhost";
     private DataInputStream in;
     private DataOutputStream out;
-
     private boolean authencated;
     private String nickname;
+    private String enterLogin = "";
     private Stage stage;
     private Stage regStage;
     private RegController regController;
@@ -65,13 +64,11 @@ public class Controller implements Initializable {
         clientList.setVisible(authencated);
         clientList.setManaged(authencated);
 
-
         if (!authencated) {
             nickname = "";
         }
         setTitle(nickname);
         textArea.clear();
-
     }
 
     @Override
@@ -112,8 +109,9 @@ public class Controller implements Initializable {
                             if (str.startsWith("/authok")) {
                                 nickname = str.split("\\s")[1];
                                 setAuthencated(true);
-                                break;
+                                textArea.appendText(history.lastChatHistory(enterLogin));
 
+                                break;
                             }
                             if (str.equals("/regok")) {
                                 regController.regResult("Регистрация прошла успешно.");
@@ -127,7 +125,6 @@ public class Controller implements Initializable {
                         }
 
                     }
-
                     //Цикл работы
                     while (authencated) {
                         String str = in.readUTF();
@@ -153,27 +150,27 @@ public class Controller implements Initializable {
                             if (str.startsWith("/chNickFalse")) {
                                 chNickController.changeResult("Данный ник занят!");
                             }
-
                         } else {
                             textArea.appendText(str + "\n");
+                            history.getOutLocalFileChat().write(str + "\n");
                         }
                     }
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-                    System.out.println("Disconnected");
-                    setAuthencated(false);
                     try {
+                        System.out.println("Disconnected");
+                        setAuthencated(false);
+                        textArea.clear();
+                        history.checkHistoryLength(enterLogin);
+                        history.getOutLocalFileChat().close();
                         socket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-
             }).start();
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -188,7 +185,6 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void tryToAuth(ActionEvent actionEvent) {
@@ -197,6 +193,7 @@ public class Controller implements Initializable {
         }
 
         String login = loginField.getText().trim();
+        enterLogin = login;
         String password = passwordField.getText().trim();
         String msg = String.format("/auth %s %s", login, password);
 
@@ -217,7 +214,6 @@ public class Controller implements Initializable {
             }
 
         });
-
     }
 
     public void clientListClick(MouseEvent mouseEvent) {
