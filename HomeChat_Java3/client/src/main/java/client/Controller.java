@@ -54,7 +54,7 @@ public class Controller implements Initializable {
     private RegController regController;
     private NickChangeController chNickController;
     private String newNickName;
-    //private DataOutputStream outLocalFileChat;
+
 
     public void setAuthencated(boolean authencated) {
         this.authencated = authencated;
@@ -70,7 +70,7 @@ public class Controller implements Initializable {
         }
         setTitle(nickname);
         textArea.clear();
-        history.lastChatHistory();
+
     }
 
     @Override
@@ -111,6 +111,8 @@ public class Controller implements Initializable {
                             if (str.startsWith("/authok")) {
                                 nickname = str.split("\\s")[1];
                                 setAuthencated(true);
+                                textArea.appendText(history.lastChatHistory(enterLogin));
+
                                 break;
                             }
                             if (str.equals("/regok")) {
@@ -152,23 +154,25 @@ public class Controller implements Initializable {
                             }
                         } else {
                             textArea.appendText(str + "\n");
-                            history.getOutLocalFileChat().writeUTF(str);
-                            history.getOutLocalFileChat().writeUTF("\n");
+                            history.getOutLocalFileChat().write(str + "\n");
                         }
                     }
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-                    System.out.println("Disconnected");
-                    setAuthencated(false);
                     try {
+                        System.out.println("Disconnected");
+                        setAuthencated(false);
                         textArea.clear();
+                        //history.getOutLocalFileChat().close();
+                        history.checkHistoryLength(enterLogin);
                         history.getOutLocalFileChat().close();
                         socket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                 }
 
             }).start();
@@ -298,14 +302,6 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public TextArea getTextArea() {
-        return textArea;
-    }
-
-    public String getEnterLogin() {
-        return enterLogin;
     }
 
 }
