@@ -11,14 +11,11 @@ public class ClientHandler {
     DataInputStream in;
     DataOutputStream out;
     WorkWithSql ws = new WorkWithSql();
-
     private boolean authenticated;
     private String nickname;
     private String login;
 
-
     public ClientHandler(Socket socket, Server server) {
-
 
         try {
             this.socket = socket;
@@ -27,27 +24,35 @@ public class ClientHandler {
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
 
-            new Thread(() -> {
+            server.getService().execute(() -> {
                 try {
                     //Цикл аутентификации
                     while (true) {
                         String str = in.readUTF();
                         if (str.startsWith("/auth ")) {
                             String[] token = str.split("\\s+");
+                            if (token[1].equals("") || token[2].equals("")) {
+                                ClientHandler.this.sendMsg("Неверный логин или пароль!");
+                                break;
+                            }
                             nickname = server.getAuthService()
                                     .getNicknameByLoginAndPassword(token[1], token[2]);
                             login = token[1];
+                            if (login == null) {
+                                ClientHandler.this.sendMsg("Неверный логин или пароль!");
+                                break;
+                            }
                             if (nickname != null) {
                                 if (!server.isLoginAuthenticated(login)) {
-                                    sendMsg("/authok " + nickname);
-                                    server.subscribe(this);
+                                    ClientHandler.this.sendMsg("/authok " + nickname);
+                                    server.subscribe(ClientHandler.this);
                                     authenticated = true;
                                     break;
                                 } else {
-                                    sendMsg("С этим логином уже вошли!");
+                                    ClientHandler.this.sendMsg("С этим логином уже вошли!");
                                 }
                             } else {
-                                sendMsg("Неверный логин или пароль!");
+                                ClientHandler.this.sendMsg("Неверный логин или пароль!");
                             }
                         }
 
@@ -59,9 +64,9 @@ public class ClientHandler {
 
                             boolean regOk = server.getAuthService().registration(token[1], token[2], token[3]);
                             if (regOk) {
-                                sendMsg("/regok");
+                                ClientHandler.this.sendMsg("/regok");
                             } else {
-                                sendMsg("/regno");
+                                ClientHandler.this.sendMsg("/regno");
                             }
                         }
 
@@ -71,8 +76,13 @@ public class ClientHandler {
                     while (authenticated) {
                         String str = in.readUTF();
                         if (str.equals("/end")) {
-                            sendMsg("/end");
+                            ClientHandler.this.sendMsg("/end");
                             System.out.println("Client disconnected");
+                            break;
+                        }
+                        if (str.equals("/serverstop")) {
+                            server.broadcastSystemMsg("/stop");
+                            server.serverStop();
                             break;
                         }
 
@@ -87,9 +97,9 @@ public class ClientHandler {
                                     nickname = token[2];
                                     server.broadcastClientList();
                                     server.broadcastSystemMsg("[" + token[1] + "]" + " сменил ник на  " + "[" + token[2] + "]");
-                                    sendMsg("/chNickOk");
+                                    ClientHandler.this.sendMsg("/chNickOk");
                                 } else {
-                                    sendMsg("/chNickFalse");
+                                    ClientHandler.this.sendMsg("/chNickFalse");
                                 }
                             }
 
@@ -98,11 +108,11 @@ public class ClientHandler {
                                 if (token.length < 3) {
                                     continue;
                                 }
-                                server.privatMsg(this, token[1], token[2]);
+                                server.privatMsg(ClientHandler.this, token[1], token[2]);
                                 System.out.println(nickname + " отправил " + token[1] + ": " + token[2]);
                             }
                         } else {
-                            server.broadcastMsg(this, str);
+                            server.broadcastMsg(ClientHandler.this, str);
                         }
 
                     }
@@ -110,7 +120,7 @@ public class ClientHandler {
                 } catch (IOException e) {
                     e.printStackTrace();
                 } finally {
-                    server.unsubscribe(this);
+                    server.unsubscribe(ClientHandler.this);
                     try {
                         socket.close();
                     } catch (IOException e) {
@@ -118,11 +128,12 @@ public class ClientHandler {
                     }
                 }
 
-            }).start();
+            });
         } catch (IOException e) {
+
+
             e.printStackTrace();
         }
-
     }
 
     public void sendMsg(String msg) {
