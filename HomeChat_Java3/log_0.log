@@ -1,0 +1,184 @@
+окт 29, 2021 5:09:30 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:10:50 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:12:53 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:13:55 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:14:08 PM server.Server <init>
+INFO: Client connected
+окт 29, 2021 5:17:08 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:18:20 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:21:02 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:21:15 PM server.Server <init>
+INFO: Client connected
+окт 29, 2021 5:22:23 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:22:34 PM server.Server <init>
+INFO: Client connected
+окт 29, 2021 5:22:46 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:22:56 PM server.Server <init>
+INFO: Client connected
+окт 29, 2021 5:28:51 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:29:04 PM server.Server <init>
+INFO: Client connected
+окт 29, 2021 5:30:31 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:30:45 PM server.Server <init>
+INFO: Client null connected!
+окт 29, 2021 5:34:57 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:35:17 PM server.Server <init>
+INFO: Client null connected!
+окт 29, 2021 5:35:40 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:35:45 PM server.Server <init>
+INFO: Client null connected!
+окт 29, 2021 5:40:42 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:40:56 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:42:03 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:44:21 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:44:35 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:45:38 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:46:07 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:46:46 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:46:57 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:47:52 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:48:04 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:50:35 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:50:46 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:51:46 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:52:03 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:52:40 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:52:51 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:53:20 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:53:31 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:54:29 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:54:42 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:56:11 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:56:22 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 5:58:37 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:58:43 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 5:58:57 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 6:00:07 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:00:27 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 6:09:27 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:09:41 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 6:10:52 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:11:03 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 6:12:05 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:12:18 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 6:12:53 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:13:12 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 6:17:32 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:17:47 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 6:17:48 PM server.ClientHandler lambda$new$0
+INFO: Client qqq connected!
+окт 29, 2021 6:18:06 PM server.Server <init>
+INFO: Client connected!
+окт 29, 2021 6:18:17 PM server.ClientHandler lambda$new$0
+INFO: Client qqq connected!
+окт 29, 2021 6:21:32 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:21:46 PM server.Server <init>
+INFO: Client with IP null trying to connect!
+окт 29, 2021 6:24:15 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:25:24 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:25:37 PM server.Server <init>
+INFO: Client with IP ServerSocket[addr=0.0.0.0/0.0.0.0,localport=8189] trying to connect!
+окт 29, 2021 6:26:07 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:26:20 PM server.Server <init>
+WARNING: Client with IP ServerSocket[addr=0.0.0.0/0.0.0.0,localport=8189] trying to connect!
+окт 29, 2021 6:26:30 PM server.ClientHandler lambda$new$0
+INFO: Client qqq connected!
+окт 29, 2021 6:30:34 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:30:49 PM server.Server <init>
+WARNING: Client with IP ServerSocket[addr=0.0.0.0/0.0.0.0,localport=8189] trying to connect!
+окт 29, 2021 6:31:00 PM server.ClientHandler lambda$new$0
+INFO: New client lll was registered.
+окт 29, 2021 6:32:50 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:33:04 PM server.Server <init>
+WARNING: Client with IP ServerSocket[addr=0.0.0.0/0.0.0.0,localport=8189] trying to connect!
+окт 29, 2021 6:33:05 PM server.ClientHandler lambda$new$0
+INFO: Client qqq connected!
+окт 29, 2021 6:33:13 PM server.ClientHandler lambda$new$0
+INFO: Client qqq disconnect.
+окт 29, 2021 6:33:19 PM server.Server <init>
+WARNING: Client with IP ServerSocket[addr=0.0.0.0/0.0.0.0,localport=8189] trying to connect!
+окт 29, 2021 6:33:19 PM server.ClientHandler lambda$new$0
+INFO: Client aaa connected!
+окт 29, 2021 6:33:44 PM server.Server <init>
+WARNING: Client with IP ServerSocket[addr=0.0.0.0/0.0.0.0,localport=8189] trying to connect!
+окт 29, 2021 6:33:52 PM server.ClientHandler lambda$new$0
+INFO: Client qqq connected!
+окт 29, 2021 6:34:24 PM server.ClientHandler lambda$new$0
+INFO: Client aaa disconnect.
+окт 29, 2021 6:34:34 PM server.ClientHandler lambda$new$0
+INFO: Client qqq disconnect.
+окт 29, 2021 6:38:50 PM server.Server <init>
+INFO: Server started!
+окт 29, 2021 6:39:10 PM server.Server <init>
+WARNING: Client with IP ServerSocket[addr=0.0.0.0/0.0.0.0,localport=8189] trying to connect!
+окт 29, 2021 6:39:11 PM server.ClientHandler lambda$new$0
+INFO: Client qqq connected!
+окт 29, 2021 6:39:15 PM server.Server <init>
+WARNING: Client with IP ServerSocket[addr=0.0.0.0/0.0.0.0,localport=8189] trying to connect!
+окт 29, 2021 6:39:18 PM server.ClientHandler lambda$new$0
+INFO: Client aaa connected!
+окт 29, 2021 6:39:22 PM server.ClientHandler lambda$new$0
+FINE: grgeg отправил grgeg: egerggge
+окт 29, 2021 6:39:37 PM server.ClientHandler lambda$new$0
+FINE: eeeueu отправил grgeg: errger
+окт 29, 2021 6:39:42 PM server.ClientHandler lambda$new$0
+FINE: eeeueu отправил eeeueu: gergerg
+окт 29, 2021 6:39:50 PM server.ClientHandler lambda$new$0
+FINE: grgeg отправил eeeueu: reegewrt
