@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.*;
 
 public class ClientHandler {
     Socket socket;
@@ -14,8 +15,10 @@ public class ClientHandler {
     private boolean authenticated;
     private String nickname;
     private String login;
+    private Logger logger;
 
     public ClientHandler(Socket socket, Server server) {
+        logger = Logger.getLogger(ClientHandler.class.getName());
 
         try {
             this.socket = socket;
@@ -47,6 +50,7 @@ public class ClientHandler {
                                     ClientHandler.this.sendMsg("/authok " + nickname);
                                     server.subscribe(ClientHandler.this);
                                     authenticated = true;
+                                    logger.log(Level.INFO, "Client " + login + " connected!");
                                     break;
                                 } else {
                                     ClientHandler.this.sendMsg("С этим логином уже вошли!");
@@ -65,6 +69,7 @@ public class ClientHandler {
                             boolean regOk = server.getAuthService().registration(token[1], token[2], token[3]);
                             if (regOk) {
                                 ClientHandler.this.sendMsg("/regok");
+                                logger.log(Level.INFO, "New client " + token[1] + " was registered.");
                             } else {
                                 ClientHandler.this.sendMsg("/regno");
                             }
@@ -77,7 +82,7 @@ public class ClientHandler {
                         String str = in.readUTF();
                         if (str.equals("/end")) {
                             ClientHandler.this.sendMsg("/end");
-                            System.out.println("Client disconnected");
+                            logger.log(Level.INFO, "Client " + login + " disconnect.");
                             break;
                         }
                         if (str.equals("/serverstop")) {
@@ -109,7 +114,7 @@ public class ClientHandler {
                                     continue;
                                 }
                                 server.privatMsg(ClientHandler.this, token[1], token[2]);
-                                System.out.println(nickname + " отправил " + token[1] + ": " + token[2]);
+                                logger.log(Level.FINE, nickname + " отправил " + token[1] + ": " + token[2]);
                             }
                         } else {
                             server.broadcastMsg(ClientHandler.this, str);
@@ -151,4 +156,5 @@ public class ClientHandler {
     public String getLogin() {
         return login;
     }
+
 }

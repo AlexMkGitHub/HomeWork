@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.*;
 
 public class Server {
     private ServerSocket server;
@@ -16,20 +17,22 @@ public class Server {
     private List<ClientHandler> clients;
     private AuthService authService;
     private ExecutorService service;
+    private Logger logger;
 
     public Server() {
         clients = new CopyOnWriteArrayList<>();
         authService = new SimpleAuthServiceSqlDb();
         service = Executors.newCachedThreadPool();
+        logger = Logger.getLogger(Server.class.getName());
         try {
             server = new ServerSocket(PORT);
-            System.out.println("Server started!");
+            logger.log(Level.INFO, "Server started!");
 
 
             while (true) {
                 socket = server.accept();
-                System.out.println("Client connected");
                 new ClientHandler(socket, this);
+                logger.log(Level.WARNING, "Client with IP " + server + " trying to connect!");
             }
 
         } catch (IOException e) {
@@ -108,7 +111,8 @@ public class Server {
             server.close();
             socket.close();
             service.shutdown();
-            System.out.println("Server STOP!!!");
+            logger.log(Level.INFO, "Server STOP!!!");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -122,4 +126,5 @@ public class Server {
     public ExecutorService getService() {
         return service;
     }
+
 }
